@@ -5,6 +5,8 @@
  * 1. Introduction to Java helpful.
  */
 
+import javax.lang.model.element.NestingKind;
+
 public abstract class Bag {
     /*
      * TODO: Create the following private instance variables
@@ -13,10 +15,10 @@ public abstract class Bag {
      *       - an int named capacity
      *       - an array of Strings named contents
      */
-
-
-
-
+    private String color;
+    private int numberOfContents;
+    private int capacity;
+    private String[] contents;
     /*
      * TODO: Create a constructor that takes two arguments:
      *       - a String representing the Bag's colour
@@ -26,7 +28,12 @@ public abstract class Bag {
      * be empty (e.g. numberOfContents is 0 and an empty String array for
      * its contents.)
      */
-
+    public Bag(String color, int capacity) {
+        this.capacity = capacity;
+        this.color = color;
+        numberOfContents = 0;
+        contents = new String[0];
+    }
 
 
 
@@ -38,6 +45,17 @@ public abstract class Bag {
      *           - getCapacity
      */
 
+    public String getColor() {
+        return color;
+    }
+
+    public int getNumberOfContents() {
+        return numberOfContents;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
 
 
 
@@ -46,7 +64,9 @@ public abstract class Bag {
      *       color of this bag to the given color.
      */
 
-
+    public void setColor(String color) {
+        this.color = color;
+    }
 
 
 
@@ -60,6 +80,17 @@ public abstract class Bag {
      *       This method should return true if the item was added
      *       and false otherwise.
      */
+    public boolean addItem(String item) {
+        if (numberOfContents >= capacity) {
+            return false;
+        }
+        numberOfContents ++;
+        String[] temp = new String[numberOfContents];
+        System.arraycopy(contents, 0, temp, 0, contents.length);
+        temp[numberOfContents - 1] = item;
+        contents = temp;
+        return true;
+    }
 
 
 
@@ -75,7 +106,15 @@ public abstract class Bag {
      *
      * @return
      */
-
+    public String popItem() {
+        if (numberOfContents == 0) {
+            return null;
+        }
+        numberOfContents --;
+        String popped = contents[contents.length -1];
+        System.arraycopy(contents, 0, contents, 0, contents.length - 1);
+        return popped;
+    }
 
 
 
@@ -87,7 +126,7 @@ public abstract class Bag {
      */
     public void increaseCapacity(int n) {
         // TODO: Implement this method.
-
+        capacity += n;
     }
 
     /**
